@@ -2,6 +2,9 @@
 # 通过 `wrangler pages deploy dist` 或 Git 关联部署时读取此文件。
 name = "modbus-online"
 pages_build_output_dir = "dist"
-compatibility_date = "2024-11-01"
-# Modbus TCP 中转 Function 需要 sockets 能力（cloudflare:sockets）
-compatibility_flags = ["sockets"]
+# Modbus TCP 中转 Function 使用 cloudflare:sockets 模块。
+# 重要：该模块自 compatibility_date >= 2024-11-01 起已默认启用，
+# **千万不要**再写 compatibility_flags = ["sockets"] —— Cloudflare 现已移除该标志，
+# 写了会报 "No such compatibility flag: sockets"，导致 Function 发布失败。
+# 只需把兼容性日期设得够新即可（此处 2025-06-01 已远超所需）。
+compatibility_date = "2025-06-01"

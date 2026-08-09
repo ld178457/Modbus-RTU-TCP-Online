@@ -52,17 +52,18 @@ git push
      - **Build output directory（构建输出目录）**：`dist`
 4. 点击 **保存并部署**。
 
-### 3. 设置 Functions 兼容标志（关键！）
+### 3. 设置 Functions 兼容性日期（关键！）
 
-云代理中转 `functions/api/modbus-proxy.ts` 用到了 `cloudflare:sockets`，
-**必须**为 Functions 开启 `sockets` 兼容标志，否则部署后云代理模式会报
-`The module 'cloudflare:sockets' ... was not found`：
+云代理中转 `functions/api/modbus-proxy.ts` 用到了 `cloudflare:sockets` 模块。
 
-- 进入项目 → **Settings → Functions → Compatibility flags**
-- 在 **Compatibility flags** 中添加一行：`sockets`
-- 同时把 **Compatibility date** 设为 `2024-11-01` 或更新
+**好消息：该模块自 `compatibility_date >= 2024-11-01` 起已默认启用，无需任何兼容标志。**
 
-> 如果用方式二（wrangler）部署，`wrangler.toml` 已写好这个标志，无需手动设置。
+- 进入项目 → **Settings → Functions**（即「运行时」设置页）
+- 把 **Compatibility date** 设为 `2025-06-01`（或任何 ≥ 2024-11-01 的日期）即可
+- **千万不要**在 Compatibility flags 里手动添加 `sockets` —— Cloudflare 已移除该标志，
+  写了会报 `No such compatibility flag: sockets`，导致 Function 发布失败
+
+> 如果用方式二（wrangler）部署，`wrangler.toml` 已设好 `compatibility_date`，同样**不含** `sockets` 标志。
 
 ### 4. 等待构建完成
 
@@ -93,8 +94,8 @@ npm run deploy
 ```toml
 name = "modbus-online"
 pages_build_output_dir = "dist"
-compatibility_date = "2024-11-01"
-compatibility_flags = ["sockets"]   # 云代理 Function 需要
+compatibility_date = "2025-06-01"
+# 注意：cloudflare:sockets 自 2024-11-01 起默认启用，无需 compat_flags
 ```
 
 部署完成后终端会输出访问地址。
@@ -146,7 +147,7 @@ compatibility_flags = ["sockets"]   # 云代理 Function 需要
 ### 零安装上线检查清单
 
 - [ ] `npm run build` 成功，产出 `dist/`
-- [ ] Pages 项目已开启 `sockets` 兼容标志（Settings → Functions → Compatibility flags 含 `sockets`）
+- [ ] Pages 项目兼容性日期 ≥ 2024-11-01（Settings → Functions → Compatibility date；**不要**也不能加 `sockets` 标志，否则部署报 `No such compatibility flag`）
 - [ ] 已设置 `ALLOWLIST`（公网多用户必做）
 - [ ] 部署后打开 `*.pages.dev`：RTU 页面在 Chrome/Edge 可识别串口；TCP 页面「公网云代理」填公网 IP 可正常收发
 
@@ -207,9 +208,11 @@ compatibility_flags = ["sockets"]   # 云代理 Function 需要
 - 若空白，请确认构建输出目录是 `dist`，且 `index.html` 存在。
 - 打开浏览器控制台看是否有资源 404（多为 BASE_URL 或资源路径问题）。
 
-**Q：云代理报 `cloudflare:sockets` 模块找不到？**
-- 没有开启 `sockets` 兼容标志。按「第二节第 3 步」或确保 `wrangler.toml` 包含
-  `compatibility_flags = ["sockets"]`。
+**Q：部署时报 `No such compatibility flag: sockets`，或云代理 `cloudflare:sockets` 模块找不到？**
+- 根因：在 Compatibility flags 里手动加了 `sockets`。该标志已被 Cloudflare 移除，
+  `cloudflare:sockets` 自 `compatibility_date >= 2024-11-01` 起默认启用，只需保留兼容性日期即可。
+- 后台：Settings → Functions → 删掉 flags 里的 `sockets`，只留兼容性日期（建议 ≥ 2025-06-01）。
+- 仓库：`wrangler.toml` 里也**不能**写 `compatibility_flags = ["sockets"]`（本项目已移除）。
 
 **Q：读取/写入报异常码 0x02 / 0x03？**
 - `0x02` = 地址越界，`0x03` = 数量超限。保持寄存器单次最多 125 个，线圈最多 2000 个，
