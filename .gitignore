@@ -30,5 +30,8 @@ pnpm-debug.log*
 local-proxy/relay.log
 local-proxy/__pycache__/
 
+# ===== 本地临时测试文件 =====
+_pw*
+
 # ===== AI 助手本地记忆目录 =====
 .workbuddy/
