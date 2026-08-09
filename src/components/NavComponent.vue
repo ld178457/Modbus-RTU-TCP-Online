@@ -30,9 +30,12 @@
         </el-menu-item>
       </el-menu>
 
-      <div v-show="!collapsed" class="qr-card">
-        <img src="/wechat-qr.jpg" alt="公众号二维码" class="qr-img" />
-        <p class="qr-text">公众号：科苑沐泽</p>
+      <div v-show="!collapsed" class="wx-card">
+        <span class="wx-label"><i class="wx-dot" aria-hidden="true"></i>扫码关注</span>
+        <div class="wx-qr-frame">
+          <img src="/wechat-qr.jpg" alt="公众号：科苑沐泽 二维码" class="wx-qr" />
+        </div>
+        <p class="wx-name">公众号：<span class="wx-accent">科苑沐泽</span></p>
       </div>
 
       <button class="collapse-btn" :title="collapsed ? '展开侧栏' : '收起侧栏'" @click="collapsed = !collapsed">
@@ -113,28 +116,80 @@ const activeIndex = computed(() => route.path)
   flex: 1;
 }
 
-.qr-card {
-  padding: 16px 14px;
+.wx-card {
+  margin: 14px 12px 12px;
+  padding: 14px 14px 12px;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.04);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: linear-gradient(155deg, rgba(64, 224, 208, 0.10), rgba(255, 255, 255, 0.025));
+  border: 1px solid rgba(64, 224, 208, 0.18);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.20);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-.qr-img {
-  width: 132px;
-  height: 132px;
-  border-radius: 6px;
-  object-fit: cover;
-  background-color: #fff;
+.wx-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(64, 224, 208, 0.38);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+}
+
+.wx-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.wx-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #07c160;
+  box-shadow: 0 0 6px #07c160;
+  animation: wx-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes wx-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.78); }
+}
+
+.wx-qr-frame {
+  width: 122px;
+  height: 122px;
+  margin: 0 auto 12px;
+  padding: 7px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.wx-qr {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
   display: block;
-  margin: 0 auto 10px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.qr-text {
+.wx-card:hover .wx-qr {
+  transform: scale(1.03);
+}
+
+.wx-name {
   margin: 0;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.75);
-  line-height: 1.4;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.wx-accent {
+  color: #07c160;
 }
 
 .collapse-btn {
@@ -170,6 +225,9 @@ const activeIndex = computed(() => route.path)
     width: 64px;
   }
   .brand-text {
+    display: none;
+  }
+  .wx-card {
     display: none;
   }
   .content {
