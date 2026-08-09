@@ -1,48 +1,34 @@
+# ===== 依赖与构建产物 =====
+node_modules/
+dist/
+dist.old/
+.wrangler/
+
+# ===== 系统 / 编辑器 =====
 .DS_Store
-node_modules
-/dist
-/dist.old
-
-
-# local env files
-.env.local
-.env.*.local
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Editor directories and files
-.idea
-.vscode
+.idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-
-# 本地代理运行时日志
-local-proxy/relay.log
-/dist.old
-
-# ============ 以下为上传 GitHub 时需排除的杂物 ============
-# WorkBuddy 本地记忆目录（含会话/项目记忆，切勿入库）
-.workbuddy/
-
-# 构建产物与临时备份
-dist*/
-dist_old_1786157402/
-
-# 本地代理的缓存与临时测试脚本（非交付物）
-local-proxy/__pycache__/
-local-proxy/bore_test.py
-
-# 杂项（过期文档 / 个人编辑器设置）
-https-setup.md
 settings.json
 
-# 已废弃的概念残留（空目录占位）
-bridge/
-workers/
+# ===== 环境变量（切勿入库）=====
+.env
+.env.local
+.env.*.local
+
+# ===== 日志 =====
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===== 本地代理运行时文件 =====
+local-proxy/relay.log
+local-proxy/__pycache__/
+
+# ===== AI 助手本地记忆目录 =====
+.workbuddy/
