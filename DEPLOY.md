@@ -25,6 +25,11 @@
 
 适合希望「推送代码即自动部署」的场景。
 
+> ⚠️ **重要：必须创建 Pages 项目，不要创建 Worker 项目！**
+> 在 Cloudflare 控制台点击 **创建** 时，界面通常会同时出现 **Worker** 和 **Pages** 两种入口。
+> 本项目是 **Vue 单页应用 + Pages Functions**，务必选择 **Pages → 连接到 Git**。
+> 如果错选成 **Worker**，构建设置里会出现 **部署命令：`npx wrangler deploy`**，部署必然失败。
+
 ### 1. 把代码推送到 Git 仓库
 
 ```bash
