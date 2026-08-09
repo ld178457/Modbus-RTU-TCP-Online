@@ -1,0 +1,7 @@
+# Cloudflare Pages 配置
+# 通过 `wrangler pages deploy dist` 或 Git 关联部署时读取此文件。
+name = "modbus-online"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-11-01"
+# Modbus TCP 中转 Function 需要 sockets 能力（cloudflare:sockets）
+compatibility_flags = ["sockets"]

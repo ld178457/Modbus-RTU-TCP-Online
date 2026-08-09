@@ -1,0 +1,135 @@
+/* 全局共享样式：两个调试页面保持完全一致的视觉语言 */
+
+:root {
+  --mb-header-bg: #e6f7ff;
+  --mb-header-border: #d9e6f2;
+  --mb-accent: #3b8cd7;
+  --mb-mono: 'Cascadia Mono', 'JetBrains Mono', Consolas, 'Courier New', monospace;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  background-color: #f5f7fa;
+}
+
+/* ---------------------------------------------------------- 页面骨架 */
+
+.mb-page {
+  padding: 0;
+  min-height: 100vh;
+}
+
+.mb-page-header {
+  padding: 14px 20px;
+  background: linear-gradient(to right, #b6cbe6, #3b8cd7);
+  border-radius: 6px;
+  color: #fff;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.mb-page-header .title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mb-page-title {
+  margin: 0;
+  font-size: 24px;
+  color: #1f3550;
+  font-weight: 700;
+}
+
+.mb-page-desc {
+  font-size: 14px;
+  color: #33506e;
+}
+
+/* ---------------------------------------------------------- 卡片 */
+
+.mb-card {
+  margin-bottom: 16px;
+}
+
+.mb-card > .el-card__header {
+  background-color: var(--mb-header-bg);
+  border-bottom: 1px solid var(--mb-header-border);
+  padding: 12px 16px;
+}
+
+.card-header {
+  font-weight: bold;
+  color: #333;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* ---------------------------------------------------------- 连接状态 */
+
+.conn-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.conn-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #c0c4cc;
+  flex-shrink: 0;
+}
+
+.conn-dot.online {
+  background: #67c23a;
+  box-shadow: 0 0 0 3px rgba(103, 194, 58, 0.2);
+  animation: mb-pulse 2s ease-in-out infinite;
+}
+
+.conn-dot.connecting {
+  background: #e6a23c;
+  animation: mb-pulse 0.9s ease-in-out infinite;
+}
+
+@keyframes mb-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* 尊重用户的减弱动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .conn-dot.online,
+  .conn-dot.connecting {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------- 响应式 */
+
+@media (max-width: 1200px) {
+  .mb-page-title {
+    font-size: 20px;
+  }
+}
