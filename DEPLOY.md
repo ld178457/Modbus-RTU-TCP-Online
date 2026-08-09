@@ -217,27 +217,20 @@ compatibility_flags = ["sockets"]   # 云代理 Function 需要
 
 ---
 
-## 八、部署到 GitHub Pages（可选）
+## 八、关于 GitHub Pages（不推荐）
 
-如果你更想用 GitHub Pages 而不是 Cloudflare，也可以。本项目已提供
-`.github/workflows/deploy-pages.yml`：
+> ⚠️ GitHub Pages 是**纯静态托管**，没有 `cloudflare:sockets` 能力，
+> `functions/` 目录不会运行，**「公网云代理」模式将完全失效**，
+> 只剩「模拟从站」和「本地直连」可用。因此本仓库**不再提供** GitHub Pages 工作流。
 
-1. 把代码推到 GitHub 仓库；
-2. 仓库 **Settings → Pages → Build and deployment → Source 选 GitHub Actions**；
-3. 推送 `master`/`main` 分支即自动构建 `dist` 并发布。
+如果你确实只需要模拟从站 + 本地直连，可自行添加
+`.github/workflows/deploy-pages.yml`（`actions/configure-pages` + `upload-pages-artifact`
++ `deploy-pages`，构建命令 `npm run build`，产物目录 `dist`），
+并在仓库 **Settings → Pages → Source** 选择 **GitHub Actions**。
 
-```bash
-git add .
-git commit -m "deploy: Modbus 在线调试工具"
-git push
-```
-
-> ⚠️ 重要限制：GitHub Pages 是**纯静态托管**，**没有** `cloudflare:sockets` 能力，
-> 因此 **「公网云代理」模式在 GitHub Pages 上不可用**（Function 不会运行）。
-> 在 GitHub Pages 上你仍然可以用：
-> - **模拟从站**（完全可用）；
-> - **本地直连（扩展）**（直连局域网设备，与托管平台无关，照常可用）。
-> 若需要「公网云代理」，请使用 Cloudflare Pages（见上文第二、三节）。
+注意：GitHub Pages 会把站点放在 `https://<用户名>.github.io/<仓库名>/` 子路径下，
+需要在 `vue.config.js` 里补上 `publicPath: '/<仓库名>/'`，否则静态资源 404、页面空白。
+Cloudflare Pages 部署在根路径，无此问题。
 
 ---
 
