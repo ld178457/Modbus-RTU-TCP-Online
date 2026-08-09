@@ -30,6 +30,11 @@
         </el-menu-item>
       </el-menu>
 
+      <div v-show="!collapsed" class="qr-card">
+        <img src="/wechat-qr.jpg" alt="公众号二维码" class="qr-img" />
+        <p class="qr-text">公众号：科苑沐泽</p>
+      </div>
+
       <button class="collapse-btn" :title="collapsed ? '展开侧栏' : '收起侧栏'" @click="collapsed = !collapsed">
         <el-icon>
           <component :is="collapsed ? Expand : Fold" />
@@ -106,6 +111,30 @@ const activeIndex = computed(() => route.path)
 .side-menu {
   border-right: none;
   flex: 1;
+}
+
+.qr-card {
+  padding: 16px 14px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.qr-img {
+  width: 132px;
+  height: 132px;
+  border-radius: 6px;
+  object-fit: cover;
+  background-color: #fff;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.qr-text {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.4;
 }
 
 .collapse-btn {
