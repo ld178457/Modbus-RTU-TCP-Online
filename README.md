@@ -3,7 +3,7 @@
 打开浏览器就能用的 Modbus 调试台。串口设备走 **Web Serial**，以太网设备走 **Modbus TCP**，
 不用装上位机、不用配环境，网页里直接发报文、看寄存器、读日志。
 
-> 在线地址：部署到 Cloudflare Pages 后填在这里 → `https://<你的项目>.pages.dev`
+> 在线地址：[https://modbus-rtu-tcp-online.pages.dev/#/tcp](https://modbus-rtu-tcp-online.pages.dev/#/tcp)（部署于 Cloudflare Pages）
 
 ![Modbus TCP 在线调试工具页面预览](./docs/preview-modbus-tcp.png)
 
